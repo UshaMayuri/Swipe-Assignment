@@ -127,11 +127,11 @@ struct ProductView: View {
             Button {
                 
             } label: {
-                Image(systemName: "magnifyingglass.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50,height: 50)
-                        .foregroundColor(.purple)
+//                Image(systemName: "magnifyingglass.circle.fill")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 50,height: 50)
+//                        .foregroundColor(.purple)
             }
         }
         .padding(.top, 10)
