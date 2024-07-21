@@ -124,15 +124,7 @@ struct ProductView: View {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(.purple)
             }
-            Button {
-                
-            } label: {
-//                Image(systemName: "magnifyingglass.circle.fill")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 50,height: 50)
-//                        .foregroundColor(.purple)
-            }
+         
         }
         .padding(.top, 10)
         .padding(.horizontal)
