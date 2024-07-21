@@ -11,7 +11,8 @@ import SwiftUI
 struct Swipe_AssignmentApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProductView()
+                .preferredColorScheme(.light)
         }
     }
 }
