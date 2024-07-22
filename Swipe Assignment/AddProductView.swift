@@ -123,7 +123,7 @@ struct AddProductView: View {
                         Spacer()
                         // Add Product button
                         Button {
-                            if (price.isEmpty || product.isEmpty || tax.isEmpty) { return }
+                            if (price.isEmpty || product.isEmpty || tax.isEmpty || productType.isEmpty) { return }
                             guard let _ = Double(price) else {
                                 shouldDismiss = false
                                 showPrompt.toggle()
