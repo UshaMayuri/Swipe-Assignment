@@ -14,6 +14,7 @@ struct ProductView: View {
     @State var showAddScreen: Bool = false
     @State private var search: String = ""
     
+//     the layout of the grid with fixed columns
     private let fixedColumn = [
         GridItem(.fixed(180), spacing: 12),
         GridItem(.fixed(180), spacing: 12)
@@ -51,7 +52,7 @@ struct ProductView: View {
             }
             .task {
                 do {
-                    try await vm.getDetails()
+                    try await vm.getDetails() // Fetch product details when the view appears
                 } catch {
                     print(error)
                 }
@@ -62,6 +63,8 @@ struct ProductView: View {
             }
         }
     }
+    
+    // View for displaying individual product cards
     
     private func productCardView(card: Response) -> some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -115,6 +118,7 @@ struct ProductView: View {
         }
     }
    
+    // Search box view
     private var SearchBox: some View {
         HStack() {
             TextField("Search", text: $search)
@@ -130,7 +134,7 @@ struct ProductView: View {
         .padding(.horizontal)
     }
     
-    
+    // Button to show the AddProductView
     private var AddButton: some View {
         Button {
             showAddScreen.toggle()

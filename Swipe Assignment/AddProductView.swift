@@ -17,6 +17,7 @@ struct AddProductView: View {
     
     @State var showPrompt: Bool = false
     @State var promptString: String = ""
+    @State var shouldDismiss: Bool = false
     
     @State private var avatarItem: PhotosPickerItem?
     @State private var avatarImageData: Data?
@@ -42,7 +43,7 @@ struct AddProductView: View {
                                     .stroke(.purple)
                                     .foregroundStyle(.clear)
                             }
-                     
+                        // Product type picker
                         HStack {
                             Text("Product Type")
                                 .foregroundStyle(.black)
@@ -57,7 +58,7 @@ struct AddProductView: View {
                             }
                             .tint(.purple)
                         }
-                        
+                        // Price input
                         Text("Price")
                             .foregroundStyle(.black)
                             .font(.title3)
@@ -69,7 +70,8 @@ struct AddProductView: View {
                                     .stroke(.purple)
                                     .foregroundStyle(.clear)
                             }
-                            .keyboardType(.numberPad)
+                            .keyboardType(.numbersAndPunctuation)
+                        // Tax input
                         Text("Tax")
                             .foregroundStyle(.black)
                             .font(.title3)
@@ -81,7 +83,7 @@ struct AddProductView: View {
                                     .stroke(.purple)
                                     .foregroundStyle(.clear)
                             }
-                            .keyboardType(.numberPad)
+                            .keyboardType(.numbersAndPunctuation)
                         HStack{
                             Text("Upload Image")
                                 .foregroundStyle(.black)
@@ -110,7 +112,7 @@ struct AddProductView: View {
                                 .stroke(.purple)
                                 .foregroundStyle(.clear)
                         }
-                        
+                        // Display selected image
                         if let avatarImageData, let uiImage = UIImage(data: avatarImageData) {
                             Image(uiImage: uiImage)
                                .resizable()
@@ -119,15 +121,30 @@ struct AddProductView: View {
                         }
                                     
                         Spacer()
+                        // Add Product button
                         Button {
                             if (price.isEmpty || product.isEmpty || tax.isEmpty) { return }
+                            guard let _ = Double(price) else {
+                                shouldDismiss = false
+                                showPrompt.toggle()
+                                promptString = "Please enter valid number in price"
+                                return
+                            }
+                            guard let _ = Double(tax) else {
+                                shouldDismiss = false
+                                showPrompt.toggle()
+                                promptString = "Please enter valid number in tax"
+                                return
+                            }
                             let postProduct = PostProduct(image: avatarImageData, price: price, productName: product, productType: productType, tax: tax)
                             Task {
                                 do {
                                     let success = try await vm.postDetails(product: postProduct)
+                                    shouldDismiss = true
                                     showPrompt.toggle()
                                     promptString = success ? "Product Added!" : "Failed"
                                 } catch {
+                                    shouldDismiss = true
                                     showPrompt.toggle()
                                     promptString = error.localizedDescription
                                 }
@@ -152,7 +169,9 @@ struct AddProductView: View {
                     Task {
                         try await vm.getDetails()
                     }
-                    dismiss()
+                    if shouldDismiss { 
+                        dismiss()
+                    }
                 }
             }
         }

@@ -43,6 +43,7 @@ struct SimpleResponseModel: Codable {
     let success: Bool
 }
 
+// Add product type
 enum ProductType: CaseIterable {
     case technology
     case food

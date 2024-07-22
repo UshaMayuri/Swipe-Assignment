@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-
+//ViewModel
 class ProductViewModel : ObservableObject {
     
     @Published var modelData: [Response]?
@@ -18,6 +18,7 @@ class ProductViewModel : ObservableObject {
     
     let decoder = JSONDecoder()
     
+    // Asynchronous function to fetch product details from the API
     func getDetails() async throws {
         let endpoint = "https://app.getswipe.in/api/public/get"
             
@@ -37,6 +38,8 @@ class ProductViewModel : ObservableObject {
             throw error
         }
     }
+    
+    // Asynchronous function to post product details to the API
     
     func postDetails(product: PostProduct) async throws -> Bool {
         var multipart = MultipartRequest()
@@ -70,6 +73,7 @@ class ProductViewModel : ObservableObject {
     }
 }
 
+//to define network errors and provide localized error descriptions
 
 enum NetworkError: Error, LocalizedError {
     case invalidURL
@@ -101,7 +105,7 @@ public extension Data {
     }
 }
 
-
+// to handle multipart/form-data requests
 public struct MultipartRequest {
     
     public let boundary: String
@@ -126,6 +130,7 @@ public struct MultipartRequest {
         "Content-Disposition: form-data; name=\"\(key)\""
     }
     
+    // Function to add a key-value pair to the request
     public mutating func add(
         key: String,
         value: String
@@ -136,6 +141,7 @@ public struct MultipartRequest {
         data.append(value + separator)
     }
     
+    // Function to add a file to the request
     public mutating func add(
         key: String,
         fileName: String,
